@@ -43,6 +43,8 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
         }
         response = requests.post(url, json=payload, timeout=40)
         response.raise_for_status()
+        print("Gemini status:", response.status_code, flush=True)
+        print("Gemini response:", response.text[:1500], flush=True)
         data = response.json()
         reply = data["candidates"][0]["content"]["parts"][0]["text"].strip()
         await update.message.reply_text(reply[:4000])
