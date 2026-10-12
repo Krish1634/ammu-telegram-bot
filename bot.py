@@ -56,7 +56,7 @@ def run_bot():
     telegram_app = Application.builder().token(BOT_TOKEN).build()
     telegram_app.add_handler(CommandHandler("start", start))
     telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
-    telegram_app.run_polling(drop_pending_updates=True)
+    telegram_app.run_polling(drop_pending_updates=True, stop_signals=None)
 
 if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
