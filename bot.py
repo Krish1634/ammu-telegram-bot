@@ -46,8 +46,19 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
         data = response.json()
         reply = data["candidates"][0]["content"]["parts"][0]["text"].strip()
         await update.message.reply_text(reply[:4000])
-    except Exception:
-        await update.message.reply_text("Aiyo, ippo konjam error varuthu 😅 Konjam neram kazhichu try pannalama? 🤍")
+    
+    except requests.exceptions.HTTPError as e:
+        print("Gemini HTTP error:", e)
+        print("Gemini response:", response.text[:2000])
+        await update.message.reply_text(
+            "Aiyo 🤍 AI service-la oru problem. Konjam nerathula try pannalaam."
+        )
+    except Exception as e:
+        print("Gemini error:", repr(e))
+        await update.message.reply_text(
+            "Aiyo 🤍 AI reply-la problem. Konjam nerathula try pannalaam."
+        )
+
 
 def run_bot():
     if not BOT_TOKEN:
