@@ -27,10 +27,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Hiii 🤍 Naan Ammu! Un kooda Tamil/Tanglish-la pesuren. Enna pannitu irukka? 😊"
     )
 
+
 async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = (update.message.text or "").strip()
+    print("Telegram message received", flush=True)
     if not user_text:
         return
+
     if not GEMINI_API_KEY:
         await update.message.reply_text("Ammu setup innum complete aagala 🤍 API key configure pannunga.")
         return
